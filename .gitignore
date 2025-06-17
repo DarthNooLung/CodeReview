@@ -33,6 +33,7 @@ ENV*/
 env*/
 pip-wheel-metadata/
 *.manifest
+pyvenv.cfg
 
 # Jupyter
 .ipynb_checkpoints
