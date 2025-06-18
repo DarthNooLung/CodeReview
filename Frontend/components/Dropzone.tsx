@@ -39,7 +39,7 @@ export default function Dropzone({ onFilesDrop }: DropzoneProps) {
         text-gray-700 dark:text-gray-200`}
     >
       <p className="text-lg font-semibold">📥 파일을 이곳에 드래그 앤 드롭</p>
-      <p className="text-sm text-gray-500 dark:text-gray-300">(또는 아래에서 수동으로 선택하세요)</p>
+      <p className="text-sm text-gray-500 dark:text-gray-300" style={{ display: 'none' }}>(또는 아래에서 수동으로 선택하세요)</p>
     </div>
   );
 }

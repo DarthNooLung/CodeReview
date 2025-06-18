@@ -6,6 +6,7 @@ import openai
 import os
 import logging
 import re
+import httpx
 
 # ✅ 환경 변수 로드 및 초기 설정
 load_dotenv()
@@ -13,6 +14,11 @@ api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     raise RuntimeError("OPENAI_API_KEY 환경 변수가 설정되지 않았습니다.")
 openai.api_key = api_key
+
+client = openai.OpenAI(
+    api_key=api_key
+    , http_client=httpx.Client(verify=False)    #인증서 필요없이 처리 추후 운영 배포시에는 해당 부분 제외 처리
+)
 
 # ✅ FastAPI 인스턴스 및 CORS 설정
 app = FastAPI()
@@ -30,7 +36,7 @@ logger = logging.getLogger("code-review-api")
 # ✅ 확장자 → 언어 매핑
 LANGUAGE_MAP = {
     'py': 'Python', 'java': 'Java', 'jsp': 'JSP', 'cs': 'C#', 'html': 'HTML',
-    'js': 'JavaScript', 'ts': 'TypeScript', 'cpp': 'C++', 'c': 'C'
+    'js': 'JavaScript', 'ts': 'TypeScript', 'cpp': 'C++', 'c': 'C', 'vue': 'Vue'
 }
 
 MAX_CHARS_PER_CHUNK = 4000  # 한 청크당 최대 문자 수
@@ -84,13 +90,13 @@ async def review_code(
             prompt = build_chunk_prompt(chunk, ext, language, idx, total)
             logger.info(f"▶ Chunk {idx+1}/{total} 요청 중... 모델: {model}")
 
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model=model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.2
             )
-
-            part_review = response.choices[0].message["content"]
+            
+            part_review = response.choices[0].message.content
             chunk_reviews.append({
                 "chunk_index": idx,
                 "markdown": part_review,
