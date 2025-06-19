@@ -1,3 +1,5 @@
+from fastapi import Response
+
 from dotenv import load_dotenv
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,6 +26,7 @@ client = openai.OpenAI(
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
+    allow_credentials=True,
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
@@ -255,7 +258,8 @@ async def gpt_format_code(
             temperature=0.3
         )
         formatted = response.choices[0].message.content
-        return { "formatted": formatted }
+        # print(formatted)
+        return Response(content=formatted, media_type="text/plain")
 
     except Exception as e:
         logger.error(f"[GPT 정렬 오류] {str(e)}")

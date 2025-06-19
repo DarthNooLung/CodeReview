@@ -89,8 +89,13 @@ export default function CodeFormatPage() {
         formData.append("language", ext);
         formData.append("model", gptModel);
         try {
-          const res = await axios.post("http://localhost:8513/gpt_format/", formData);
-          let content = res.data.formatted || "❌ GPT 응답 없음";
+          const res = await axios.post("http://localhost:8513/gpt_format/", formData, {
+            maxBodyLength: Infinity,
+            maxContentLength: Infinity,
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          //console.log(res.data.length);
+          let content = res.data || "❌ GPT 응답 없음";
 
           // 🔥 GPT 응답에서 ```sql ~ ``` 제거
           content = content
