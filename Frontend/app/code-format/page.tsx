@@ -1,3 +1,5 @@
+
+
 'use client';
 
 import { useState } from "react";
@@ -5,12 +7,30 @@ import axios from "axios";
 import JSZip from "jszip";
 import Dropzone from "@/components/Dropzone";
 
+
+function detectLanguage(fileName: string): string {
+  const ext = fileName.split('.').pop()?.toLowerCase();
+  switch (ext) {
+    case "jsp": return "jsp";
+    case "sql": return "sql";
+    case "java": return "java";
+    case "js": return "javascript";
+    case "ts": return "typescript";
+    case "py": return "python";
+    case "html": return "html";
+    case "json": return "json";
+    case "css": return "css";
+    default: return "plain text";
+  }
+}
+
+
 export default function CodeFormatPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [results, setResults] = useState<{ name: string, original: string, formatted: string, log: string }[]>([]);
   const [languages] = useState(['java', 'sql', 'jsp', 'py', 'js', 'html']);
   const [infoMessage, setInfoMessage] = useState("");
-  const [engine, setEngine] = useState<"rule" | "gpt">("rule");
+  const [engine, setEngine] = useState<"gpt" | "rule">("gpt");
   const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
   const [fileOptions, setFileOptions] = useState<Record<string, { indent: string; brace: string; comma: string }>>({});
   const [activeTabs, setActiveTabs] = useState<Record<string, 'original' | 'formatted'>>({});
@@ -86,7 +106,8 @@ export default function CodeFormatPage() {
       } else {
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("language", ext);
+        const language = detectLanguage(file.name);
+        formData.append("language", language);
         formData.append("model", gptModel);
         try {
           const res = await axios.post("http://localhost:8513/gpt_format/", formData, {
@@ -159,9 +180,9 @@ export default function CodeFormatPage() {
       <div className="flex flex-wrap gap-4 items-center my-4">
         <label className="text-sm">
           정렬 방식:
-          <select value={engine} onChange={e => setEngine(e.target.value as "rule" | "gpt")} className="ml-2 border p-1 rounded">
-            <option value="rule">룰 기반 정렬</option>
+          <select value={engine} onChange={e => setEngine(e.target.value as "gpt" | "rule")} className="ml-2 border p-1 rounded">
             <option value="gpt">GPT 정렬</option>
+            <option value="rule">룰 기반 정렬</option>            
           </select>
         </label>
 

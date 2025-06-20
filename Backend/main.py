@@ -150,6 +150,48 @@ def smart_chunking(code: str, chunk_size: int, language: str = "Plain Text") -> 
         chunks.append(buffer)
     return chunks
 
+# ✅ 스마트 청크
+def smart_chunking_html(code: str, chunk_size: int) -> list[str]:
+    pattern = r'\n'
+    parts = re.split(pattern, code)
+    chunks = []
+    buffer = ""
+    for line in parts:
+        if len(buffer) + len(line) < chunk_size:
+            buffer += line + "\n"
+        else:
+            chunks.append(buffer)
+            buffer = line + "\n"
+    if buffer:
+        chunks.append(buffer)
+    return chunks
+
+# ✅ 언어별 정렬 규칙
+LANGUAGE_RULES = {
+    "jsp": "- 들여쓰기는 탭으로 고정하세요.\n- html 구조를 변경하지 마세요.",
+    "sql": "- 들여쓰기는 탭으로.\n- SELECT, FROM, JOIN 등은 줄바꿈.\n- 콤마는 줄 앞.",
+    "java": "- 들여쓰기는 탭으로.\n- 중괄호는 같은 줄 유지.",
+    "html": "- 구조 변경 없이 들여쓰기만 조정하세요. 들여쓰기는 탭 사용.",
+    "python": "- 들여쓰기는 탭으로. 구조나 순서 변경 금지."
+}
+
+# ✅ 마크다운 제거
+def extract_code_from_markdown(gpt_response: str) -> str:
+    match = re.search(r"```[a-zA-Z]*\n([\s\S]*?)\n```", gpt_response)
+    return match.group(1) if match else gpt_response
+
+# 들여쓰기 구하는 함수
+def count_indent_level(text: str, indent_char: str = "\t") -> int:
+    lines = text.rstrip().splitlines()
+    for line in reversed(lines):
+        if line.strip() and line.startswith(indent_char):  # 비어있지 않고, 들여쓰기 있음
+            return len(line) - len(line.lstrip(indent_char))
+    return 0  # 기본값
+
+# ✅ 새 후처리 함수: 줄 처음에만 2칸 스페이스 단위 → 탭 변환
+def convert_2space_to_tab_only_at_line_start(line: str) -> str:
+    return re.sub(r"^(  )+", lambda m: "\t" * (len(m.group(0)) // 2), line)
+
 def build_chunk_prompt(code_chunk: str, ext: str, language: str, idx: int, total: int, summary: str):
     return f"""
 너는 숙련된 {language} 코드 리뷰어야. 아래는 전체 코드 파일의 {idx+1}/{total}번째 조각이야.
@@ -227,40 +269,95 @@ async def review_code(
         logger.error(f"[에러 발생] {str(e)}")
         return JSONResponse(status_code=500, content={"error": str(e)})
 
-
+# ✅ GPT 기반 정렬 API
 @app.post("/gpt_format/")
 async def gpt_format_code(
     file: UploadFile = File(...),
     language: str = Form(...),
-    model: str = Form("gpt-3.5-turbo"),  # ✅ 추가: gpt-3.5-turbo, gpt-4, gpt-4o 등
-    style: str = Form("깔끔하고 정돈된 코드 스타일로 정렬해줘")
+    model: str = Form("gpt-3.5-turbo")
 ):
     content = (await file.read()).decode("utf-8")
 
-    prompt = f"""
-다음은 {language.upper()} 코드입니다. 다음 기준에 따라 보기 좋게 정렬해 주세요:
+    additional_rule = "\n- 특히 들여쓰기는 반드시 '탭(tab)'으로 해 주세요. 절대 스페이스(공백)로 들여쓰지 마세요."
+    additional_rule += "\n- 코드 외에 불필요한 설명, 주석, 메타 정보는 절대 추가하지 마세요. 원본에 없는 주석은 생성하지 마세요."
 
-- 들여쓰기: 탭 문자
-- 콤마 위치: 줄 앞에 오도록 (leading comma)
-- 중괄호 또는 서브쿼리 들여쓰기를 계층적으로 정렬
-- 정렬 전 코드:
-```{language.lower()}
-{content}
-```
+    rule = LANGUAGE_RULES.get(language.lower(), "\n- 들여쓰기 기준만 맞춰 정렬해 주세요.") + additional_rule
 
-정렬 후 코드만 결과로 보여 주세요.
-"""
+    if language.lower() in ["html", "jsp"]:
+        chunks = smart_chunking_html(content, MAX_CHARS_PER_CHUNK)
+    else:
+        chunks = smart_chunking(content, MAX_CHARS_PER_CHUNK, LANGUAGE_MAP.get(language, "Plain Text"))
 
-    try:
-        response = client.chat.completions.create(
-            model=model,  # ✅ 선택된 모델 사용
-            messages=[{ "role": "user", "content": prompt }],
-            temperature=0.3
+    formatted_blocks = []
+    context_tail = ""
+
+    for idx, chunk in enumerate(chunks):        
+        indent_level = count_indent_level(context_tail)
+
+        #print(f"이전 블록 탭 : {indent_level}")
+        #print(f"[정렬 전 코드\\n{chunk}")
+
+        prompt = (
+            f"다음은 {language.upper()} 코드입니다.\n"
+            f"아래 조건에 따라 보기 좋게 정렬해 주세요:\n"
+            f"{rule}\n"
+            f"- 이 블록은 이전 블록의 탭 {indent_level}개 들여쓰기 수준에서 시작됩니다.\n"
+            #f"- 이 들여쓰기 수준을 모든 줄에 유지해 주세요.\n"
+            #f"- 절대 공백(스페이스) 들여쓰기를 사용하지 마세요.\n"
+            f"- 이 코드는 무조건 들여쓰기 탭 9개로 시작되어야 합니다.\n"
+            f"- 탭 개수를 임의로 줄이면 안 됩니다.\n"
+            f"- 시작 줄이 맨 앞에 붙거나 들여쓰기 레벨이 줄면 실패입니다.\n"
+            f"- 반드시 입력된 정렬 전 코드와 동일한 탭 개수를 유지해 주세요.\n"
         )
-        formatted = response.choices[0].message.content
-        # print(formatted)
-        return Response(content=formatted, media_type="text/plain")
 
-    except Exception as e:
-        logger.error(f"[GPT 정렬 오류] {str(e)}")
-        return JSONResponse(status_code=500, content={"error": str(e)})
+        if context_tail:            
+            prompt += (
+                f"이전 코드 맥락 (들여쓰기 계층 유지를 위해 참고):\n"
+                f"```{language.lower()}\n{context_tail}\n```\n\n"
+            )
+
+        prompt += (
+            f"정렬 전 코드:\n"
+            f"```{language.lower()}\n{chunk}\n```\n\n"
+            f"정렬된 코드만 결과로 보여 주세요."
+        )
+
+        #print(f"idx : {idx+1}")
+        #print(prompt)
+
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.3
+            )
+            formatted = response.choices[0].message.content
+
+            #print(f"[결과값 원본]\n{formatted}")
+
+            formatted_code = extract_code_from_markdown(formatted)
+
+            #print(f"[결과값 마크다운제거]\n{formatted_code}")
+
+             # ✨ 적용: 줄 처음의 2칸 스페이스를 탭으로 변환
+            lines = formatted_code.splitlines()
+            corrected = [convert_2space_to_tab_only_at_line_start(line) for line in lines]
+            formatted_code = "\n".join(corrected)
+
+            formatted_blocks.append(formatted_code)
+
+            CONTEXT_LINES = 30
+            last_lines = formatted_code.rstrip().splitlines()[-CONTEXT_LINES:]
+            context_tail = "\n".join(last_lines)
+
+        except Exception as e:
+            logger.error(f"[GPT 정렬 오류] Chunk {idx+1} 실패: {str(e)}")
+            formatted_blocks.append(f"/* 오류: {str(e)} */")
+            context_tail = ""
+    
+    #print("==== 청크 수:", len(formatted_blocks))
+    #for i, chunk in enumerate(formatted_blocks):
+        #print(f"[청크 {i+1}]:{chunk[:300]}...")
+
+    final_code = "\n".join(formatted_blocks)
+    return Response(content=final_code, media_type="text/plain")
