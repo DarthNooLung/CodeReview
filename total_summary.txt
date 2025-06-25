@@ -1,0 +1,958 @@
+🔍 총 478개 Java 파일 분석 시작
+정적분석 진행중 : 1 / 478 → RecruitmentApplication.java
+[✅ 취약점 없음]
+정적분석 진행중 : 2 / 478 → ServletInitializer.java
+[✅ 취약점 없음]
+정적분석 진행중 : 3 / 478 → AesConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 4 / 478 → HttpClientConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 5 / 478 → JasyptConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 6 / 478 → MessageConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 7 / 478 → MSSQLDataSourceConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 8 / 478 → MyBatisConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 9 / 478 → ServiceConfigure.java
+[✅ 취약점 없음]
+정적분석 진행중 : 10 / 478 → WebMvcConfigure.java
+[✅ 취약점 없음]
+정적분석 진행중 : 11 / 478 → WebSecurityConfigure.java
+정적분석 결과 생성 완료: main_java_com_hdec_recruitment_config_WebSecurityConfigure.txt
+정적분석 진행중 : 12 / 478 → HttpInterceptor.java
+[✅ 취약점 없음]
+정적분석 진행중 : 13 / 478 → Pageable.java
+[✅ 취약점 없음]
+정적분석 진행중 : 14 / 478 → SimpleOffsetPageableHandlerMethodArgumentResolver.java
+[✅ 취약점 없음]
+정적분석 진행중 : 15 / 478 → SimpleOffsetPageRequest.java
+[✅ 취약점 없음]
+정적분석 진행중 : 16 / 478 → AuthenticationRequest.java
+[✅ 취약점 없음]
+정적분석 진행중 : 17 / 478 → AuthenticationResult.java
+[✅ 취약점 없음]
+정적분석 진행중 : 18 / 478 → EntryPointUnauthorizedHandler.java
+[✅ 취약점 없음]
+정적분석 진행중 : 19 / 478 → JWT.java
+[✅ 취약점 없음]
+정적분석 진행중 : 20 / 478 → JwtAccessDeniedHandler.java
+[✅ 취약점 없음]
+정적분석 진행중 : 21 / 478 → JwtAuthentication.java
+[✅ 취약점 없음]
+정적분석 진행중 : 22 / 478 → JwtAuthenticationProvider.java
+[✅ 취약점 없음]
+정적분석 진행중 : 23 / 478 → JwtAuthenticationToken.java
+[✅ 취약점 없음]
+정적분석 진행중 : 24 / 478 → JwtAuthenticationTokenFilter.java
+[✅ 취약점 없음]
+정적분석 진행중 : 25 / 478 → AbstractController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 26 / 478 → AuthenticationRestController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 27 / 478 → auth_verifyController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 28 / 478 → CustomErrorController.java
+정적분석 결과 생성 완료: main_java_com_hdec_recruitment_controller_CustomErrorController.txt
+정적분석 진행중 : 29 / 478 → GetDropDownController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 30 / 478 → GlobalExceptionHandler.java
+[✅ 취약점 없음]
+정적분석 진행중 : 31 / 478 → HealthCheckRestController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 32 / 478 → RobotsController.java
+정적분석 결과 생성 완료: main_java_com_hdec_recruitment_controller_RobotsController.txt
+정적분석 진행중 : 33 / 478 → TestController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 34 / 478 → user_messageController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 35 / 478 → user_registerController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 36 / 478 → apply_army_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 37 / 478 → apply_awarded_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 38 / 478 → apply_base_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 39 / 478 → apply_career_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 40 / 478 → apply_col_school_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 41 / 478 → apply_community_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 42 / 478 → apply_const_engineer_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 43 / 478 → apply_foreign_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 44 / 478 → apply_high_school_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 45 / 478 → apply_it_skill_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 46 / 478 → apply_job_sal_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 47 / 478 → apply_lang_able_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 48 / 478 → apply_lang_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 49 / 478 → apply_license_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 50 / 478 → apply_new_applicationController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 51 / 478 → apply_phone_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 52 / 478 → apply_photoController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 53 / 478 → apply_projectC_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 54 / 478 → apply_self_intro_saveController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 55 / 478 → apply_submitController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 56 / 478 → hdec_newsController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 57 / 478 → ApplyIdRegController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 58 / 478 → ApplyListPoolController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 59 / 478 → ApplyPwdChangeController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 60 / 478 → ApplyPwdSearchController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 61 / 478 → ApplyPwdSearchPopController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 62 / 478 → ApplyWriteListController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 63 / 478 → apply_attachController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 64 / 478 → apply_eventController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 65 / 478 → apply_listController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 66 / 478 → apply_loginController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 67 / 478 → apply_mainController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 68 / 478 → apply_noticeController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 69 / 478 → apply_notice_viewController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 70 / 478 → apply_qnaController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 71 / 478 → apply_recommendController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 72 / 478 → apply_result_popController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 73 / 478 → apply_return_docController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 74 / 478 → apply_search_popController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 75 / 478 → apply_viewController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 76 / 478 → AuthDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 77 / 478 → auth_verifyDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 78 / 478 → GetDropDownDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 79 / 478 → SocialLoginDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 80 / 478 → TestDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 81 / 478 → user_messageDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 82 / 478 → user_registerDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 83 / 478 → apply_army_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 84 / 478 → apply_awarded_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 85 / 478 → apply_awarded_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 86 / 478 → apply_base_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 87 / 478 → apply_career_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 88 / 478 → apply_career_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 89 / 478 → apply_col_school_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 90 / 478 → apply_col_school_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 91 / 478 → apply_community_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 92 / 478 → apply_community_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 93 / 478 → apply_const_engineer_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 94 / 478 → apply_const_engineer_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 95 / 478 → apply_foreign_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 96 / 478 → apply_foreign_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 97 / 478 → apply_high_school_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 98 / 478 → apply_high_school_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 99 / 478 → apply_it_skill_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 100 / 478 → apply_it_skill_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 101 / 478 → apply_job_sal_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 102 / 478 → apply_lang_able_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 103 / 478 → apply_lang_able_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 104 / 478 → apply_lang_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 105 / 478 → apply_lang_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 106 / 478 → apply_license_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 107 / 478 → apply_license_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 108 / 478 → apply_new_applicationDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 109 / 478 → apply_new_application_loadDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 110 / 478 → apply_phone_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 111 / 478 → apply_photoDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 112 / 478 → apply_projectC_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 113 / 478 → apply_projectC_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 114 / 478 → apply_self_intro_saveAllDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 115 / 478 → apply_self_intro_saveDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 116 / 478 → apply_submitDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 117 / 478 → ApiError.java
+[✅ 취약점 없음]
+정적분석 진행중 : 118 / 478 → ApiResult.java
+[✅ 취약점 없음]
+정적분석 진행중 : 119 / 478 → hdec_newsDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 120 / 478 → ApplyIdRegDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 121 / 478 → ApplyListPoolDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 122 / 478 → ApplyPwdChangeDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 123 / 478 → ApplyPwdSearchDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 124 / 478 → ApplyPwdSearchPopDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 125 / 478 → ApplyWriteListDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 126 / 478 → apply_attachDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 127 / 478 → apply_eventDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 128 / 478 → apply_listDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 129 / 478 → apply_loginDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 130 / 478 → apply_mainDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 131 / 478 → apply_noticeDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 132 / 478 → apply_notice_viewDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 133 / 478 → apply_qnaDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 134 / 478 → apply_recommendDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 135 / 478 → apply_result_popDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 136 / 478 → apply_return_docDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 137 / 478 → apply_search_popDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 138 / 478 → apply_viewDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 139 / 478 → Auth.java
+[✅ 취약점 없음]
+정적분석 진행중 : 140 / 478 → auth_verify.java
+[✅ 취약점 없음]
+정적분석 진행중 : 141 / 478 → auth_verifyEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 142 / 478 → GetDropDown.java
+[✅ 취약점 없음]
+정적분석 진행중 : 143 / 478 → SocialLogin.java
+[✅ 취약점 없음]
+정적분석 진행중 : 144 / 478 → SocialLoginEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 145 / 478 → Test.java
+[✅ 취약점 없음]
+정적분석 진행중 : 146 / 478 → TestEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 147 / 478 → User.java
+[✅ 취약점 없음]
+정적분석 진행중 : 148 / 478 → user_message.java
+[✅ 취약점 없음]
+정적분석 진행중 : 149 / 478 → user_messageEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 150 / 478 → user_register.java
+[✅ 취약점 없음]
+정적분석 진행중 : 151 / 478 → user_registerEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 152 / 478 → apply_army_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 153 / 478 → apply_army_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 154 / 478 → apply_awarded_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 155 / 478 → apply_awarded_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 156 / 478 → apply_base_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 157 / 478 → apply_base_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 158 / 478 → apply_career_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 159 / 478 → apply_career_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 160 / 478 → apply_col_school_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 161 / 478 → apply_col_school_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 162 / 478 → apply_community_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 163 / 478 → apply_community_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 164 / 478 → apply_const_engineer_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 165 / 478 → apply_const_engineer_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 166 / 478 → apply_foreign_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 167 / 478 → apply_foreign_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 168 / 478 → apply_high_school_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 169 / 478 → apply_high_school_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 170 / 478 → apply_it_skill_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 171 / 478 → apply_it_skill_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 172 / 478 → apply_job_sal_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 173 / 478 → apply_job_sal_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 174 / 478 → apply_lang_able_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 175 / 478 → apply_lang_able_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 176 / 478 → apply_lang_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 177 / 478 → apply_lang_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 178 / 478 → apply_license_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 179 / 478 → apply_license_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 180 / 478 → apply_new_application.java
+[✅ 취약점 없음]
+정적분석 진행중 : 181 / 478 → apply_new_applicationEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 182 / 478 → apply_phone_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 183 / 478 → apply_phone_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 184 / 478 → apply_photo.java
+[✅ 취약점 없음]
+정적분석 진행중 : 185 / 478 → apply_projectC_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 186 / 478 → apply_projectC_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 187 / 478 → apply_self_intro_save.java
+[✅ 취약점 없음]
+정적분석 진행중 : 188 / 478 → apply_self_intro_saveEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 189 / 478 → apply_submit.java
+[✅ 취약점 없음]
+정적분석 진행중 : 190 / 478 → apply_submitEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 191 / 478 → Role.java
+[✅ 취약점 없음]
+정적분석 진행중 : 192 / 478 → hdec_news.java
+[✅ 취약점 없음]
+정적분석 진행중 : 193 / 478 → ApplyIdReg.java
+[✅ 취약점 없음]
+정적분석 진행중 : 194 / 478 → ApplyIdRegEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 195 / 478 → ApplyListPool.java
+[✅ 취약점 없음]
+정적분석 진행중 : 196 / 478 → ApplyListPoolEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 197 / 478 → ApplyPwdChange.java
+[✅ 취약점 없음]
+정적분석 진행중 : 198 / 478 → ApplyPwdChangeEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 199 / 478 → ApplyPwdSearch.java
+[✅ 취약점 없음]
+정적분석 진행중 : 200 / 478 → ApplyPwdSearchEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 201 / 478 → ApplyPwdSearchPop.java
+[✅ 취약점 없음]
+정적분석 진행중 : 202 / 478 → ApplyPwdSearchPopEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 203 / 478 → ApplyWriteList.java
+[✅ 취약점 없음]
+정적분석 진행중 : 204 / 478 → ApplyWriteListEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 205 / 478 → apply_attach.java
+[✅ 취약점 없음]
+정적분석 진행중 : 206 / 478 → apply_event.java
+[✅ 취약점 없음]
+정적분석 진행중 : 207 / 478 → apply_list.java
+[✅ 취약점 없음]
+정적분석 진행중 : 208 / 478 → apply_listEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 209 / 478 → apply_login.java
+[✅ 취약점 없음]
+정적분석 진행중 : 210 / 478 → apply_loginEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 211 / 478 → apply_main.java
+[✅ 취약점 없음]
+정적분석 진행중 : 212 / 478 → apply_mainEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 213 / 478 → apply_notice.java
+[✅ 취약점 없음]
+정적분석 진행중 : 214 / 478 → apply_noticeEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 215 / 478 → apply_notice_view.java
+[✅ 취약점 없음]
+정적분석 진행중 : 216 / 478 → apply_notice_viewEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 217 / 478 → apply_qna.java
+[✅ 취약점 없음]
+정적분석 진행중 : 218 / 478 → apply_qnaEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 219 / 478 → apply_recommend.java
+[✅ 취약점 없음]
+정적분석 진행중 : 220 / 478 → apply_result_pop.java
+[✅ 취약점 없음]
+정적분석 진행중 : 221 / 478 → apply_result_popEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 222 / 478 → apply_return_docEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 223 / 478 → apply_search_pop.java
+[✅ 취약점 없음]
+정적분석 진행중 : 224 / 478 → apply_search_popEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 225 / 478 → apply_view.java
+[✅ 취약점 없음]
+정적분석 진행중 : 226 / 478 → apply_viewEntity.java
+[✅ 취약점 없음]
+정적분석 진행중 : 227 / 478 → CustomException.java
+[✅ 취약점 없음]
+정적분석 진행중 : 228 / 478 → NotFoundException.java
+[✅ 취약점 없음]
+정적분석 진행중 : 229 / 478 → ServiceRuntimeException.java
+[✅ 취약점 없음]
+정적분석 진행중 : 230 / 478 → UnauthorizedException.java
+[✅ 취약점 없음]
+정적분석 진행중 : 231 / 478 → AuthRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 232 / 478 → auth_verifyRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 233 / 478 → GetDropDownRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 234 / 478 → SocialLoginRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 235 / 478 → TestRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 236 / 478 → user_messageRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 237 / 478 → user_registerRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 238 / 478 → apply_army_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 239 / 478 → apply_awarded_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 240 / 478 → apply_base_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 241 / 478 → apply_career_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 242 / 478 → apply_col_school_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 243 / 478 → apply_community_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 244 / 478 → apply_const_engineer_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 245 / 478 → apply_foreign_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 246 / 478 → apply_high_school_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 247 / 478 → apply_it_skill_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 248 / 478 → apply_job_sal_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 249 / 478 → apply_lang_able_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 250 / 478 → apply_lang_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 251 / 478 → apply_license_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 252 / 478 → apply_new_applicationRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 253 / 478 → apply_phone_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 254 / 478 → apply_photoRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 255 / 478 → apply_projectC_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 256 / 478 → apply_self_intro_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 257 / 478 → apply_submitRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 258 / 478 → apply_army_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 259 / 478 → apply_awarded_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 260 / 478 → apply_base_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 261 / 478 → apply_career_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 262 / 478 → apply_col_school_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 263 / 478 → apply_community_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 264 / 478 → apply_const_engineer_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 265 / 478 → apply_foreign_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 266 / 478 → apply_high_school_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 267 / 478 → apply_it_skill_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 268 / 478 → apply_job_sal_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 269 / 478 → apply_lang_able_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 270 / 478 → apply_lang_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 271 / 478 → apply_license_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 272 / 478 → apply_new_applicationMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 273 / 478 → apply_phone_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 274 / 478 → apply_photoMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 275 / 478 → apply_projectC_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 276 / 478 → apply_self_intro_saveMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 277 / 478 → apply_submitMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 278 / 478 → Mybatisapply_army_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 279 / 478 → Mybatisapply_awarded_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 280 / 478 → Mybatisapply_base_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 281 / 478 → Mybatisapply_career_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 282 / 478 → Mybatisapply_col_school_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 283 / 478 → Mybatisapply_community_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 284 / 478 → Mybatisapply_const_engineer_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 285 / 478 → Mybatisapply_foreign_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 286 / 478 → Mybatisapply_high_school_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 287 / 478 → Mybatisapply_it_skill_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 288 / 478 → Mybatisapply_job_sal_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 289 / 478 → Mybatisapply_lang_able_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 290 / 478 → Mybatisapply_lang_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 291 / 478 → Mybatisapply_license_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 292 / 478 → Mybatisapply_new_applicationRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 293 / 478 → Mybatisapply_phone_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 294 / 478 → Mybatisapply_photoRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 295 / 478 → Mybatisapply_projectC_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 296 / 478 → Mybatisapply_self_intro_saveRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 297 / 478 → Mybatisapply_submitRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 298 / 478 → AuthMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 299 / 478 → auth_verifyMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 300 / 478 → GetDropDownMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 301 / 478 → MybatisAuthRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 302 / 478 → Mybatisauth_verifyRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 303 / 478 → MybatisGetDropDownRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 304 / 478 → MybatisSocialLoginRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 305 / 478 → MybatisTestRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 306 / 478 → MybatisUserRegisterRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 307 / 478 → Mybatisuser_messageRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 308 / 478 → SocialLoginMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 309 / 478 → TestMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 310 / 478 → user_messageMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 311 / 478 → user_registerMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 312 / 478 → hdec_newsMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 313 / 478 → Mybatishdec_newsRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 314 / 478 → ApplyIdRegMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 315 / 478 → ApplyListPoolMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 316 / 478 → ApplyPwdChangeMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 317 / 478 → ApplyPwdSearchMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 318 / 478 → ApplyPwdSearchPopMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 319 / 478 → ApplyWriteListMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 320 / 478 → apply_attachMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 321 / 478 → apply_eventMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 322 / 478 → apply_listMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 323 / 478 → apply_loginMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 324 / 478 → apply_mainMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 325 / 478 → apply_noticeMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 326 / 478 → apply_notice_viewMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 327 / 478 → apply_qnaMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 328 / 478 → apply_recommendMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 329 / 478 → apply_result_popMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 330 / 478 → apply_return_docMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 331 / 478 → apply_search_popMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 332 / 478 → apply_viewMapper.java
+[✅ 취약점 없음]
+정적분석 진행중 : 333 / 478 → MybatisApplyIdRegRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 334 / 478 → MybatisApplyListPoolRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 335 / 478 → MybatisApplyPwdChangeRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 336 / 478 → MybatisApplyPwdSearchPopRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 337 / 478 → MybatisApplyPwdSearchRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 338 / 478 → MybatisApplyWriteListRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 339 / 478 → Mybatisapply_attachRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 340 / 478 → Mybatisapply_eventRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 341 / 478 → Mybatisapply_listRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 342 / 478 → Mybatisapply_loginRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 343 / 478 → Mybatisapply_mainRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 344 / 478 → Mybatisapply_noticeRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 345 / 478 → Mybatisapply_notice_viewRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 346 / 478 → Mybatisapply_qnaRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 347 / 478 → Mybatisapply_recommendRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 348 / 478 → Mybatisapply_result_popRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 349 / 478 → Mybatisapply_return_docRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 350 / 478 → Mybatisapply_search_popRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 351 / 478 → Mybatisapply_viewRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 352 / 478 → hdec_newsRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 353 / 478 → ApplyIdRegRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 354 / 478 → ApplyListPoolRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 355 / 478 → ApplyPwdChangeRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 356 / 478 → ApplyPwdSearchPopRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 357 / 478 → ApplyPwdSearchRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 358 / 478 → ApplyWriteListRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 359 / 478 → apply_attachRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 360 / 478 → apply_eventRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 361 / 478 → apply_listRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 362 / 478 → apply_loginRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 363 / 478 → apply_mainRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 364 / 478 → apply_noticeRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 365 / 478 → apply_notice_viewRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 366 / 478 → apply_qnaRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 367 / 478 → apply_recommendRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 368 / 478 → apply_result_popRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 369 / 478 → apply_return_docRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 370 / 478 → apply_search_popRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 371 / 478 → apply_viewRepository.java
+[✅ 취약점 없음]
+정적분석 진행중 : 372 / 478 → AuthService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 373 / 478 → auth_verifyService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 374 / 478 → GetDropDownService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 375 / 478 → TestService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 376 / 478 → user_messageService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 377 / 478 → user_registerService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 378 / 478 → apply_army_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 379 / 478 → apply_awarded_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 380 / 478 → apply_base_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 381 / 478 → apply_career_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 382 / 478 → apply_col_school_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 383 / 478 → apply_community_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 384 / 478 → apply_const_engineer_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 385 / 478 → apply_foreign_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 386 / 478 → apply_high_school_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 387 / 478 → apply_it_skill_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 388 / 478 → apply_job_sal_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 389 / 478 → apply_lang_able_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 390 / 478 → apply_lang_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 391 / 478 → apply_license_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 392 / 478 → apply_new_applicationService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 393 / 478 → apply_phone_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 394 / 478 → apply_photoService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 395 / 478 → apply_projectC_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 396 / 478 → apply_self_intro_saveService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 397 / 478 → apply_submitService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 398 / 478 → AuthServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 399 / 478 → auth_verifyServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 400 / 478 → GetDropDownServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 401 / 478 → MailService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 402 / 478 → TestServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 403 / 478 → user_messageServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 404 / 478 → user_registerServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 405 / 478 → apply_army_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 406 / 478 → apply_awarded_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 407 / 478 → apply_base_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 408 / 478 → apply_career_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 409 / 478 → apply_col_school_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 410 / 478 → apply_community_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 411 / 478 → apply_const_engineer_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 412 / 478 → apply_foreign_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 413 / 478 → apply_high_school_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 414 / 478 → apply_it_skill_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 415 / 478 → apply_job_sal_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 416 / 478 → apply_lang_able_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 417 / 478 → apply_lang_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 418 / 478 → apply_license_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 419 / 478 → apply_new_applicationServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 420 / 478 → apply_phone_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 421 / 478 → apply_photoServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 422 / 478 → apply_projectC_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 423 / 478 → apply_self_intro_saveServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 424 / 478 → apply_submitServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 425 / 478 → hdec_newsServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 426 / 478 → ApplyIdRegServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 427 / 478 → ApplyListPoolServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 428 / 478 → ApplyPwdChangeServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 429 / 478 → ApplyPwdSearchPopServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 430 / 478 → ApplyPwdSearchServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 431 / 478 → ApplyWriteListServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 432 / 478 → apply_attachServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 433 / 478 → apply_eventServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 434 / 478 → apply_listServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 435 / 478 → apply_loginServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 436 / 478 → apply_mainServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 437 / 478 → apply_noticeServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 438 / 478 → apply_notice_viewServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 439 / 478 → apply_qnaServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 440 / 478 → apply_recommendServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 441 / 478 → apply_result_popServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 442 / 478 → apply_return_docServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 443 / 478 → apply_search_popServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 444 / 478 → apply_viewServiceImpl.java
+[✅ 취약점 없음]
+정적분석 진행중 : 445 / 478 → hdec_newsService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 446 / 478 → ApplyIdRegService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 447 / 478 → ApplyListPoolService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 448 / 478 → ApplyPwdChangeService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 449 / 478 → ApplyPwdSearchPopService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 450 / 478 → ApplyPwdSearchService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 451 / 478 → ApplyWriteListService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 452 / 478 → apply_attachService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 453 / 478 → apply_eventService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 454 / 478 → apply_listService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 455 / 478 → apply_loginService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 456 / 478 → apply_mainService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 457 / 478 → apply_noticeService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 458 / 478 → apply_notice_viewService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 459 / 478 → apply_qnaService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 460 / 478 → apply_recommendService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 461 / 478 → apply_result_popService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 462 / 478 → apply_return_docService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 463 / 478 → apply_search_popService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 464 / 478 → apply_viewService.java
+[✅ 취약점 없음]
+정적분석 진행중 : 465 / 478 → HttpUtils.java
+[✅ 취약점 없음]
+정적분석 진행중 : 466 / 478 → MessageUtils.java
+[✅ 취약점 없음]
+정적분석 진행중 : 467 / 478 → RestTemplateUtils.java
+[✅ 취약점 없음]
+정적분석 진행중 : 468 / 478 → SocialLoginApplication.java
+[✅ 취약점 없음]
+정적분석 진행중 : 469 / 478 → SocialLoginController.java
+[✅ 취약점 없음]
+정적분석 진행중 : 470 / 478 → KakaoTokenResponse.java
+[✅ 취약점 없음]
+정적분석 진행중 : 471 / 478 → KakaoUserDto.java
+[✅ 취약점 없음]
+정적분석 진행중 : 472 / 478 → KakaoUserResponse.java
+[✅ 취약점 없음]
+정적분석 진행중 : 473 / 478 → LoginRequest.java
+[✅ 취약점 없음]
+정적분석 진행중 : 474 / 478 → NaverTokenResponse.java
+[✅ 취약점 없음]
+정적분석 진행중 : 475 / 478 → NaverUserResponse.java
+[✅ 취약점 없음]
+정적분석 진행중 : 476 / 478 → RecruitmentApplicationTests.java
+[✅ 취약점 없음]
+정적분석 진행중 : 477 / 478 → JasyptConfig.java
+[✅ 취약점 없음]
+정적분석 진행중 : 478 / 478 → JasyptConfigTest.java
+[✅ 취약점 없음]
+✅ 모든 파일 분석 완료!

@@ -9,24 +9,28 @@ def smart_chunking(code: str, chunk_size: int, language: str = "Plain Text") -> 
         "TypeScript": r'(\n\s*(function|class)\s+\w+\s*\([^)]*\)\s*\{)',
         "C++": r'(\n\s*(class|void|\w+)\s+\w+\s*\([^)]*\)\s*\{)',
     }
+    
     pattern = lang_patterns.get(language, r'\n')
     parts = re.split(pattern, code)
     chunks = []
     buffer = ""
     i = 0
+    
     while i < len(parts):
-        unit = parts[i]
+        part = parts[i] or ""
         if i + 1 < len(parts):
-            unit += parts[i + 1]
+            part += parts[i + 1] or ""
             i += 2
         else:
             i += 1
-        if len(buffer) + len(unit) < chunk_size:
-            buffer += unit
+
+        if len(buffer) + len(part) < chunk_size:
+            buffer += part
         else:
             if buffer:
                 chunks.append(buffer)
-            buffer = unit
+            buffer = part
+
     if buffer:
         chunks.append(buffer)
     return chunks

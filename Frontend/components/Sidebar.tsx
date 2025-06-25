@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { CodeReviewIcon } from './icons/CodeReviewIcon';
 import { CodeFormatIcon } from './icons/CodeFormatIcon';
+import { CodeSastIcon } from './icons/CodeSastIcon';
 
 const menuItems = [
-  { name: '코드 리뷰', path: '/code-review', icon: <CodeReviewIcon /> },
-  { name: '코드 정렬', path: '/code-format', icon: <CodeFormatIcon /> },
+  { name: '코드 리뷰', path: '/code-review', icon: <CodeReviewIcon /> },  
+  { name: '코드 분석', path: '/code-sast', icon: <CodeFormatIcon /> },  
+  { name: '코드 정렬', path: '/code-format', icon: <CodeSastIcon /> },
 ];
 
 export default function Sidebar() {
