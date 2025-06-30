@@ -4,8 +4,6 @@ import asyncio
 from config import client
 from openai import AsyncOpenAI
 
-client = AsyncOpenAI()
-
 def ask_sidekick(
     prompt: str,
     model: str = "gpt-3.5-turbo",
@@ -41,6 +39,8 @@ def ask_sidekick(
 
 
 async def format_finding_with_gpt(finding: str, model: str = "gpt-3.5-turbo") -> str:
+    client = AsyncOpenAI()
+    
     """
     단일 finding(문자열)에 대해 GPT에게 개선 피드백을 요청하는 함수
     """
