@@ -1,6 +1,10 @@
 import os
 import openai
+import asyncio
 from config import client
+from openai import AsyncOpenAI
+
+client = AsyncOpenAI()
 
 def ask_sidekick(
     prompt: str,
@@ -34,3 +38,35 @@ def ask_sidekick(
     except Exception as e:
         print(f"[Sidekick Error] GPT 요청 실패: {e}")
         return ""
+
+
+async def format_finding_with_gpt(finding: str, model: str = "gpt-3.5-turbo") -> str:
+    """
+    단일 finding(문자열)에 대해 GPT에게 개선 피드백을 요청하는 함수
+    """
+    prompt = (
+        "아래의 정적 분석 결과를 참고하여, 해당 코드 이슈를 "
+        "개발자가 이해하기 쉽게 설명하고 개선 방법을 제안해 주세요.\n\n"
+        f"[Finding]\n{finding}"
+    )
+
+    completion = await client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": "당신은 숙련된 소프트웨어 보안 전문가입니다."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3
+    )
+
+    return completion.choices[0].message.content.strip()
+
+
+async def format_findings_with_gpt_bulk(findings: list[str], model: str = "gpt-4o") -> list[str]:
+    """
+    여러 finding 항목을 받아서 각 항목별 GPT 피드백을 병렬로 생성
+    기존 format_finding_with_gpt()를 그대로 활용
+    """
+    tasks = [format_finding_with_gpt(f, model) for f in findings]
+    results = await asyncio.gather(*tasks)
+    return results

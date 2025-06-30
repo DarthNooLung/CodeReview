@@ -1,8 +1,8 @@
 import subprocess, tempfile, os, uuid, requests, json
+from .gpt_sidekick import format_findings_with_gpt_bulk
 
 SEM_GREP_RULES_PATH = "D:/003_Develop/05_Python/97.semgrep-rules/"  # 최상위 rules 폴더
 
-# 확장자 → 해당 언어 규칙 폴더명 맵핑
 RULE_LANG_MAP = {
     "java": "java",
     "js": "javascript",
@@ -11,24 +11,25 @@ RULE_LANG_MAP = {
     "cs": "csharp"
 }
 
-def semgrep_scan_code_detail(code: str, ext: str) -> str:
-    EXT_MAP = {
-        "java": "main.java",
-        "js": "main.js",
-        "html": "main.html",
-        "py": "main.py",
-        "jsp": "main.jsp",
-        "cs": "main.cs",
-        "aspx": "main.aspx"
-    }
+EXT_MAP = {
+    "java": "main.java",
+    "js": "main.js",
+    "html": "main.html",
+    "py": "main.py",
+    "jsp": "main.jsp",
+    "cs": "main.cs",
+    "aspx": "main.aspx"
+}
 
-    # 규칙 경로 결정
-    rule_subdir = RULE_LANG_MAP.get(ext, None)
+def _get_config_path(ext):
+    rule_subdir = RULE_LANG_MAP.get(ext)
     if rule_subdir:
-        config_path = os.path.join(SEM_GREP_RULES_PATH, rule_subdir)
-    else:
-        config_path = SEM_GREP_RULES_PATH  # fallback: 전체 룰셋
+        return os.path.join(SEM_GREP_RULES_PATH, rule_subdir)
+    return SEM_GREP_RULES_PATH
 
+
+def semgrep_scan_code_detail(code: str, ext: str) -> str:
+    config_path = _get_config_path(ext)
     print(f"룰 경로 : {config_path}")
 
     filename = EXT_MAP.get(ext, f"main.{ext}")
@@ -53,8 +54,8 @@ def semgrep_scan_code_detail(code: str, ext: str) -> str:
                 .get("profiling_times", {})
                 .get("total_time", 0.0)
             )
-            
             parseTime = f"\n⏱️ 분석 소요 시간: {parse_time:.3f}초"
+
             if not results:
                 return f"[✅ 취약점 없음]\n이 파일에는 Semgrep 룰셋에 해당하는 보안 이슈가 발견되지 않았습니다.{parseTime}"
 
@@ -62,7 +63,6 @@ def semgrep_scan_code_detail(code: str, ext: str) -> str:
             for r in results:
                 extra = r.get("extra", {})
                 meta = extra.get("metadata", {})
-                #formatted.append(f"""📄 파일: {r.get('path', filename)}
                 formatted.append(f"""🔢 라인: {r['start'].get('line', '?')}
 ⚠️ 심각도: {extra.get('severity', '정보없음')}
 💬 설명: {extra.get('message', 'No message')}
@@ -75,26 +75,111 @@ def semgrep_scan_code_detail(code: str, ext: str) -> str:
         except Exception as e:
             return "[Semgrep 결과 파싱 오류]\n" + str(e)
 
+async def semgrep_scan_code_detail_with_gpt(
+    code: str,
+    ext: str,
+    use_gpt: bool = False,
+    gpt_model: str = "gpt-3.5-turbo"
+) -> dict:
+    config_path = _get_config_path(ext)
+    print(f"룰 경로 : {config_path}")
+
+    filename = EXT_MAP.get(ext, f"main.{ext}")
+
+    with tempfile.TemporaryDirectory() as tempdir:
+        src_path = os.path.join(tempdir, filename)
+        with open(src_path, "w", encoding="utf-8") as f:
+            f.write(code)
+
+        scan = subprocess.run(
+            ["semgrep", f"--config={config_path}", "--json", src_path],
+            capture_output=True, text=True, encoding="utf-8"
+        )
+
+        #print("====1====")
+        if scan.returncode != 0 and not scan.stdout:
+            return {"error": "[Semgrep 실행 오류]", "details": scan.stderr}
+
+        #print("====2====")
+        try:
+            #print("====3====")
+            findings_json = json.loads(scan.stdout)
+            results = findings_json.get("results", [])
+            parse_time = (
+                findings_json.get("time", {})
+                .get("profiling_times", {})
+                .get("total_time", 0.0)
+            )
+
+            #print("====4====")
+
+            if not results:
+                return {
+                    "results": [f"[✅ 취약점 없음]\n이 파일에는 Semgrep 룰셋에 해당하는 보안 이슈가 발견되지 않았습니다."],
+                    "parse_time": parse_time
+                }
+
+            #print("====5====")
+
+            finding_summaries = []
+            for r in results:
+                rule = r.get("check_id", "")
+                path = r.get("path", "")
+                line = r.get("start", {}).get("line", "?")
+                message = r.get("extra", {}).get("message", "No message")
+                finding_summaries.append(f"[{rule}] {path}:{line} - {message}")
+                #print(f"====5-{line}====")
+
+            #print("====6====")
+
+            # GPT 피드백 생성
+            gpt_feedbacks = []
+
+            if use_gpt:
+                gpt_feedbacks = await format_findings_with_gpt_bulk(finding_summaries, gpt_model)
+
+            #print("====7====")
+
+            # 포맷 텍스트 생성
+            formatted_results = []
+            for idx, r in enumerate(results):
+                extra = r.get("extra", {})
+                meta = extra.get("metadata", {})
+                links = r.get("extra", {}).get("metadata", {}).get("references", [])
+
+                base_text = f"""🔢 라인: {r['start'].get('line', '?')}
+⚠️ 심각도: {extra.get('severity', '정보없음')}
+💬 설명: {extra.get('message', 'No message')}
+📚 관련: {", ".join(meta.get('cwe', []) + meta.get('owasp', []))}
+🔗 링크:
+{chr(10).join(links) if links else '-'}
+"""
+
+                if use_gpt and idx < len(gpt_feedbacks):
+                    base_text += f"\n✍️ GPT 개선 제안:\n{gpt_feedbacks[idx]}"
+
+                #print(f"{base_text}")
+
+                formatted_results.append(base_text)
+            
+            #print("====8====")
+            return {
+                "results": formatted_results,
+                "parse_time": parse_time
+            }
+
+        except Exception as e:
+            formatted_results = []
+            formatted_results.append(f"❌ 오류 메시지\n{str(e)}")
+            return {
+                "results": formatted_results,
+                "parse_time": 0
+            }
 
 def semgrep_scan_code(code: str, ext: str) -> str:
-    EXT_MAP = {
-        "java": "main.java",
-        "js": "main.js",
-        "html": "main.html",
-        "py": "main.py",
-        "jsp": "main.jsp",
-        "cs": "main.cs",
-        "aspx": "main.aspx"
-    }
-    # 규칙 경로 결정
-    rule_subdir = RULE_LANG_MAP.get(ext, None)
-    if rule_subdir:
-        config_path = os.path.join(SEM_GREP_RULES_PATH, rule_subdir)
-    else:
-        config_path = SEM_GREP_RULES_PATH  # fallback: 전체 룰셋
-
+    config_path = _get_config_path(ext)
     print(f"룰 경로 : {config_path}")
-    
+
     filename = EXT_MAP.get(ext, f"main.{ext}")
     with tempfile.TemporaryDirectory() as tempdir:
         src_path = os.path.join(tempdir, filename)
@@ -108,17 +193,16 @@ def semgrep_scan_code(code: str, ext: str) -> str:
 
         if scan.returncode != 0 and not scan.stdout:
             return "[Semgrep 실행 오류]\n" + scan.stderr
-        
+
         try:
             findings = json.loads(scan.stdout)
             results = findings.get("results", [])
             if not results:
                 return "[Semgrep 취약점 없음]"
-            
+
             summary = ""
             for r in results:
                 extra = r.get("extra", {})
-                meta = extra.get("metadata", {})
                 line = r.get("start", {}).get("line", "?")
                 message = extra.get("message", "No message")
                 summary += f"\n[라인: {line}] {message}\n"
@@ -134,7 +218,6 @@ def sonarqube_scan_java_code(code: str, sonar_host: str, sonar_token: str) -> st
         src_path = os.path.join(tempdir, "Main.java")
         with open(src_path, "w", encoding="utf-8") as f:
             f.write(code)
-        # sonar-project.properties 생성
         props_path = os.path.join(tempdir, "sonar-project.properties")
         with open(props_path, "w") as f:
             f.write(f"""
@@ -144,16 +227,14 @@ sonar.java.binaries=.
 sonar.sourceEncoding=UTF-8
 sonar.host.url={sonar_host}
 """)
-        # SonarScanner 실행
         scan = subprocess.run(
             ["sonar-scanner", f"-Dsonar.login={sonar_token}"],
             cwd=tempdir, capture_output=True, text=True
         )
-        # 분석 결과를 REST API로 수집
         issues_url = f"{sonar_host}/api/issues/search?componentKeys={sonar_project}&resolved=false"
         try:
             import time
-            time.sleep(3)  # SonarQube 서버가 인덱싱할 시간 약간 부여
+            time.sleep(3)
             resp = requests.get(issues_url, auth=(sonar_token, ''))
             if resp.status_code == 200:
                 issues = resp.json()

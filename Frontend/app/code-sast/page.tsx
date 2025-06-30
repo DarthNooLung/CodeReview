@@ -7,12 +7,13 @@ import Dropzone from "@/components/Dropzone";
 export default function SastOnlyPage() {
   const [files, setFiles] = useState<File[]>([]);
   const [currentFileIndex, setCurrentFileIndex] = useState(0);
-  const [sastResults, setSastResults] = useState<string[]>([]);
+  const [sastResults, setSastResults] = useState<(any[] | string)[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentProcessingIndex, setCurrentProcessingIndex] = useState<number | null>(null);
   const [useGptFeedback, setUseGptFeedback] = useState(false);
   const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
 
+  /** ----------- File Upload Handling ----------- **/
   const handleDrop = (droppedFiles: File[]) => {
     setFiles([...files, ...droppedFiles]);
     setCurrentFileIndex(0);
@@ -35,13 +36,14 @@ export default function SastOnlyPage() {
     }
   };
 
+  /** ----------- Upload to Server ----------- **/
   const handleUpload = async () => {
     setLoading(true);
     setCurrentProcessingIndex(0);
-    const allSastResults: string[] = [];
+    const allResults: (any[] | string)[] = [];
 
     for (let i = 0; i < files.length; i++) {
-      setCurrentProcessingIndex(i + 1); // 1-based index
+      setCurrentProcessingIndex(i + 1);
       const formData = new FormData();
       formData.append("file", files[i]);
       formData.append("use_gpt_feedback", String(useGptFeedback));
@@ -49,31 +51,73 @@ export default function SastOnlyPage() {
 
       try {
         const res = await axios.post("http://localhost:8513/sast/", formData);
-        allSastResults.push(res.data.sast_result || "");
-      } catch {
-        allSastResults.push("[정적분석 실패]");
+        if (res.data?.error) {
+          allResults.push(`[❌ 서버 오류]\n${res.data.error}\n${res.data.details || ''}`);
+        } else {
+          allResults.push(res.data.sast_result || []);
+        }
+      } catch (err: any) {
+        allResults.push(`[❌ 요청 실패]\n${err?.message || 'Unknown error'}`);
       }
     }
 
-    setSastResults(allSastResults);
+    setSastResults(allResults);
     setLoading(false);
     setCurrentProcessingIndex(null);
   };
 
-  const handleCopySast = () => {
-    navigator.clipboard.writeText(sastResults[currentFileIndex] || "");
-    alert("정적분석 결과가 복사되었습니다.");
+  /** ----------- Copy / Save Helpers ----------- **/
+  const copyText = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert("📋 복사되었습니다.");
   };
 
-  const handleDownloadSast = () => {
-    const blob = new Blob([sastResults[currentFileIndex] || ""], { type: "text/plain;charset=utf-8" });
+  const saveText = (text: string, filename: string = "sast_result.txt") => {
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `${files[currentFileIndex]?.name || "sast_result"}.sast.txt`;
+    link.download = filename;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
+
+  const handleCopyAll = () => {
+    const current = sastResults[currentFileIndex];
+    if (!current) return;
+
+    let text = "";
+    if (typeof current === "string") {
+      text = current;
+    } else {
+      text = current
+        .map((langRes: any) =>
+          [`📌 ${langRes.language} (⏱️ ${langRes.parse_time?.toFixed(3)}초)`, ...(langRes.results || [])].join("\n\n")
+        )
+        .join("\n\n---\n\n");
+    }
+    copyText(text);
+  };
+
+  const handleDownloadAll = () => {
+    const current = sastResults[currentFileIndex];
+    if (!current) return;
+
+    let text = "";
+    if (typeof current === "string") {
+      text = current;
+    } else {
+      text = current
+        .map((langRes: any) =>
+          [`📌 ${langRes.language} (⏱️ ${langRes.parse_time?.toFixed(3)}초)`, ...(langRes.results || [])].join("\n\n")
+        )
+        .join("\n\n---\n\n");
+    }
+    saveText(text, `${files[currentFileIndex]?.name || "sast_result"}.sast.txt`);
+  };
+
+  /** ----------- Rendering ----------- **/
+  const currentResult = sastResults[currentFileIndex];
 
   return (
     <main className="min-h-screen p-8 bg-gray-100 dark:bg-gray-900 dark:text-white">
@@ -91,18 +135,25 @@ export default function SastOnlyPage() {
       <Dropzone onFilesDrop={handleDrop} />
 
       <div className="flex items-center gap-4 my-4">
-        <select value={gptModel} onChange={(e) => setGptModel(e.target.value)} className="border rounded px-2 py-1 dark:bg-gray-700 dark:text-white">
+        <select
+          value={gptModel}
+          onChange={(e) => setGptModel(e.target.value)}
+          className="border rounded px-2 py-1 dark:bg-gray-700 dark:text-white"
+        >
           <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
           <option value="gpt-4">gpt-4</option>
           <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
         </select>
         <label className="flex items-center gap-2">
-          <input type="checkbox" checked={useGptFeedback} onChange={(e) => setUseGptFeedback(e.target.checked)} />
+          <input
+            type="checkbox"
+            checked={useGptFeedback}
+            onChange={(e) => setUseGptFeedback(e.target.checked)}
+          />
           <span>문제 발생 시 GPT 개선 피드백 받기</span>
         </label>
       </div>
 
-      {/* 버튼 + 파일 목록 */}
       <div className="flex items-center gap-4 my-6 flex-wrap">
         <button
           onClick={handleUpload}
@@ -139,29 +190,91 @@ export default function SastOnlyPage() {
         )}
       </div>
 
-      {/* 정적분석 결과 표시 */}
-      {sastResults[currentFileIndex] && (
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold mb-2">🔍 정적분석 결과</h2>
-          <div className="bg-white dark:bg-gray-800 p-4 rounded shadow whitespace-pre-wrap break-words">
-            {sastResults[currentFileIndex]}
-          </div>
-          <div className="flex gap-4 mt-2">
-            <button
-              onClick={handleCopySast}
-              className="bg-green-600 text-white px-4 py-2 rounded shadow"
-            >
-              📋 결과 복사
-            </button>
-            <button
-              onClick={handleDownloadSast}
-              className="bg-gray-700 text-white px-4 py-2 rounded shadow"
-            >
-              ⬇️ 결과 다운로드
-            </button>
-          </div>
-        </section>
-      )}
+      <section className="mb-8">
+        {typeof currentResult === 'string' && (
+          <>
+            <h2 className="text-xl font-semibold mb-2">❌ 분석 실패 / 오류 메시지</h2>
+            <div className="bg-red-100 dark:bg-red-900 p-4 rounded shadow whitespace-pre-wrap break-words">
+              {currentResult
+                .split('\n')
+                .filter(Boolean)
+                .map((line, idx) => (
+                  <div key={idx} className="flex justify-between items-center border-b py-1">
+                    <span className="break-words">{line}</span>
+                    <button
+                      onClick={() => copyText(line)}
+                      className="text-xs bg-green-600 text-white px-2 py-1 rounded"
+                    >
+                      📋
+                    </button>
+                  </div>
+                ))}
+            </div>
+            <div className="flex gap-4 mt-2">
+              <button
+                onClick={handleCopyAll}
+                className="bg-green-600 text-white px-4 py-2 rounded shadow"
+              >
+                📋 전체 복사
+              </button>
+              <button
+                onClick={handleDownloadAll}
+                className="bg-gray-700 text-white px-4 py-2 rounded shadow"
+              >
+                ⬇️ 전체 저장
+              </button>
+            </div>
+          </>
+        )}
+
+        {Array.isArray(currentResult) && (
+          <>
+            <h2 className="text-xl font-semibold mb-2">🔍 정적분석 결과</h2>
+
+            {currentResult.length === 0 && (
+              <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
+                [✅ 분석결과 없음]
+              </div>
+            )}
+
+            {currentResult.map((langResult: any, idx: number) => (
+              <div
+                key={idx}
+                className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4 whitespace-pre-wrap break-words"
+              >
+                <h3 className="text-lg font-bold mb-2">
+                  📌 {langResult.language} (⏱️ {langResult.parse_time?.toFixed(3)}초)
+                </h3>
+                {langResult.results?.map((line: string, i: number) => (
+                  <div key={i} className="flex justify-between items-center border-b py-3">
+                    <span className="break-words">{line}</span>
+                    <button
+                      onClick={() => copyText(line)}
+                      className="text-xs bg-green-600 text-white px-2 py-1 rounded"
+                    >
+                      📋
+                    </button>
+                  </div>
+                ))}
+                <div className="flex gap-2 mt-2">
+                  <button
+                    onClick={() => copyText(langResult.results.join('\n'))}
+                    className="bg-green-600 text-white px-3 py-1 rounded shadow text-sm"
+                  >
+                    📋 이 언어결과 복사
+                  </button>
+                  <button
+                    onClick={() => saveText(langResult.results.join('\n'))}
+                    className="bg-gray-700 text-white px-3 py-1 rounded shadow text-sm"
+                  >
+                    ⬇️ 이 언어결과 저장
+                  </button>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+      </section>
     </main>
   );
 }

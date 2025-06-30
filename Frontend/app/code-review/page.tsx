@@ -291,13 +291,13 @@ export default function Home() {
                   return (
                     <>
                       <h3 className="text-lg font-semibold mt-4 mb-1">🧠 기능 설명</h3>
-                      <p>{review || "없음"}</p>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;{review || "없음"}</p>
           
                       <h3 className="text-lg font-semibold mt-4 mb-1">🔧 개선이 필요한 부분</h3>
-                      <p>{improvement || "없음"}</p>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;{improvement || "없음"}</p>
 
                       <h3 className="text-lg font-semibold mt-4 mb-1">📌 주요 변경 요약</h3>
-                      <p>{changes || "없음"}</p>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;{changes || "없음"}</p>
           
                       <h3 className="text-lg font-semibold mt-4 mb-1">🛠️ 리팩토링 코드</h3>
                       <SyntaxHighlighter language={languages[currentFileIndex]} style={oneDark} wrapLongLines>
