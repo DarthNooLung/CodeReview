@@ -38,9 +38,9 @@ def ask_sidekick(
         return ""
 
 
-async def format_finding_with_gpt(finding: str, model: str = "gpt-3.5-turbo") -> str:
-    client = AsyncOpenAI()
-    
+def format_finding_with_gpt(finding: str, model: str = "gpt-3.5-turbo") -> str:
+    #client = AsyncOpenAI()
+
     """
     단일 finding(문자열)에 대해 GPT에게 개선 피드백을 요청하는 함수
     """
@@ -50,7 +50,7 @@ async def format_finding_with_gpt(finding: str, model: str = "gpt-3.5-turbo") ->
         f"[Finding]\n{finding}"
     )
 
-    completion = await client.chat.completions.create(
+    completion = client.chat.completions.create(
         model=model,
         messages=[
             {"role": "system", "content": "당신은 숙련된 소프트웨어 보안 전문가입니다."},
@@ -62,11 +62,11 @@ async def format_finding_with_gpt(finding: str, model: str = "gpt-3.5-turbo") ->
     return completion.choices[0].message.content.strip()
 
 
-async def format_findings_with_gpt_bulk(findings: list[str], model: str = "gpt-4o") -> list[str]:
+def format_findings_with_gpt_bulk(findings: list[str], model: str = "gpt-4o") -> list[str]:
     """
     여러 finding 항목을 받아서 각 항목별 GPT 피드백을 병렬로 생성
     기존 format_finding_with_gpt()를 그대로 활용
     """
     tasks = [format_finding_with_gpt(f, model) for f in findings]
-    results = await asyncio.gather(*tasks)
+    results = asyncio.gather(*tasks)
     return results

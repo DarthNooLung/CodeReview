@@ -1,5 +1,5 @@
 import subprocess, tempfile, os, uuid, requests, json
-from .gpt_sidekick import format_findings_with_gpt_bulk
+from .gpt_sidekick import format_findings_with_gpt_bulk, format_finding_with_gpt
 
 SEM_GREP_RULES_PATH = "D:/003_Develop/05_Python/97.semgrep-rules/"  # 최상위 rules 폴더
 
@@ -75,7 +75,7 @@ def semgrep_scan_code_detail(code: str, ext: str) -> str:
         except Exception as e:
             return "[Semgrep 결과 파싱 오류]\n" + str(e)
 
-async def semgrep_scan_code_detail_with_gpt(
+def semgrep_scan_code_detail_with_gpt(
     code: str,
     ext: str,
     use_gpt: bool = False,
@@ -133,10 +133,10 @@ async def semgrep_scan_code_detail_with_gpt(
             #print("====6====")
 
             # GPT 피드백 생성
-            gpt_feedbacks = []
+            #gpt_feedbacks = []
 
-            if use_gpt:
-                gpt_feedbacks = await format_findings_with_gpt_bulk(finding_summaries, gpt_model)
+            #if use_gpt:
+                #gpt_feedbacks = format_findings_with_gpt_bulk(finding_summaries, gpt_model)
 
             #print("====7====")
 
@@ -154,10 +154,11 @@ async def semgrep_scan_code_detail_with_gpt(
 🔗 링크:
 {chr(10).join(links) if links else '-'}
 """
-
-                if use_gpt and idx < len(gpt_feedbacks):
-                    base_text += f"\n✍️ GPT 개선 제안:\n{gpt_feedbacks[idx]}"
-
+                #일괄로 불러오는게 잘 안되어서 건바이건으로 처리
+                #if use_gpt and idx < len(gpt_feedbacks):
+                    #base_text += f"\n✍️ GPT 개선 제안:\n{gpt_feedbacks[idx]}"
+                if use_gpt:
+                    base_text += f"\n✍️ GPT 개선 제안:\n{format_finding_with_gpt(finding_summaries[idx], gpt_model)}"
                 #print(f"{base_text}")
 
                 formatted_results.append(base_text)
