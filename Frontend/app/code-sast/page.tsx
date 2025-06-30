@@ -10,6 +10,8 @@ export default function SastOnlyPage() {
   const [sastResults, setSastResults] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentProcessingIndex, setCurrentProcessingIndex] = useState<number | null>(null);
+  const [useGptFeedback, setUseGptFeedback] = useState(false);
+  const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
 
   const handleDrop = (droppedFiles: File[]) => {
     setFiles([...files, ...droppedFiles]);
@@ -42,6 +44,8 @@ export default function SastOnlyPage() {
       setCurrentProcessingIndex(i + 1); // 1-based index
       const formData = new FormData();
       formData.append("file", files[i]);
+      formData.append("use_gpt_feedback", String(useGptFeedback));
+      formData.append("gpt_model", gptModel);
 
       try {
         const res = await axios.post("http://localhost:8513/sast/", formData);
@@ -85,6 +89,18 @@ export default function SastOnlyPage() {
 
       <h1 className="text-2xl font-bold mb-4">🛡️ 정적분석 도우미</h1>
       <Dropzone onFilesDrop={handleDrop} />
+
+      <div className="flex items-center gap-4 my-4">
+        <select value={gptModel} onChange={(e) => setGptModel(e.target.value)} className="border rounded px-2 py-1 dark:bg-gray-700 dark:text-white">
+          <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+          <option value="gpt-4">gpt-4</option>
+          <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
+        </select>
+        <label className="flex items-center gap-2">
+          <input type="checkbox" checked={useGptFeedback} onChange={(e) => setUseGptFeedback(e.target.checked)} />
+          <span>문제 발생 시 GPT 개선 피드백 받기</span>
+        </label>
+      </div>
 
       {/* 버튼 + 파일 목록 */}
       <div className="flex items-center gap-4 my-6 flex-wrap">

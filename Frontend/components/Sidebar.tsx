@@ -16,9 +16,9 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 h-screen bg-gray-100 p-4">
+    <aside className="w-64 min-h-screen bg-gray-100 p-4 flex flex-col">
       <h2 className="text-xl font-bold mb-6">기능 메뉴</h2>
-      <nav className="flex flex-col gap-2">
+      <nav className="flex flex-col gap-2 flex-1">
         {menuItems.map(({ name, path, icon }) => (
           <Link key={path} href={path}>
             <div className={`flex items-center gap-2 p-2 rounded hover:bg-gray-200 cursor-pointer ${
@@ -30,6 +30,8 @@ export default function Sidebar() {
           </Link>
         ))}
       </nav>
+      {/* 하단 여유 영역(선택) */}
+      <div className="flex-1" />
     </aside>
   );
 }

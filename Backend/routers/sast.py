@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File
+from fastapi import APIRouter, UploadFile, File, Form
 from fastapi.responses import JSONResponse
 from utils.sast import semgrep_scan_code_detail, semgrep_scan_code_detail
 from utils.security import allowed_file, file_size_okay
@@ -7,7 +7,11 @@ from utils.split_utils import split_jsp, split_aspx, split_html  # 분리 함수
 router = APIRouter()
 
 @router.post("/sast/")
-async def analyze_code_only_sast(file: UploadFile = File(...)):
+async def analyze_code_only_sast(
+    file: UploadFile = File(...),
+    use_gpt_feedback: str = Form("false"),
+    gpt_model: str = Form("gpt-3.5-turbo")
+):
     try:
         if not allowed_file(file.filename):
             return JSONResponse(status_code=400, content={"error": "허용되지 않는 확장자입니다."})

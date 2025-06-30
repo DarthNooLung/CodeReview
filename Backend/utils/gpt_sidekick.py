@@ -2,7 +2,12 @@ import os
 import openai
 from config import client
 
-def ask_sidekick(prompt: str, model: str = "gpt-3.5-turbo", temperature: float = 0.2) -> str:
+def ask_sidekick(
+    prompt: str,
+    model: str = "gpt-3.5-turbo",
+    temperature: float = 0.2,
+    system_prompt: str = "당신은 유용한 AI 어시스턴트입니다."
+) -> str:
     """
     GPT 사이드킥에게 프롬프트를 보내 응답을 받습니다.
 
@@ -10,6 +15,7 @@ def ask_sidekick(prompt: str, model: str = "gpt-3.5-turbo", temperature: float =
         prompt (str): 사용자 질문 또는 요청
         model (str): 사용할 GPT 모델 이름
         temperature (float): 창의성 온도 (기본 0.2)
+        system_prompt (str): 시스템 역할 메시지 (컨텍스트 설정)
 
     Returns:
         str: GPT의 응답 텍스트
@@ -17,7 +23,10 @@ def ask_sidekick(prompt: str, model: str = "gpt-3.5-turbo", temperature: float =
     try:
         response = client.chat.completions.create(
             model=model,
-            messages=[{"role": "user", "content": prompt}],
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": prompt}
+            ],
             temperature=temperature
         )
         return response.choices[0].message.content.strip()
