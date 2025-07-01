@@ -1,4 +1,5 @@
 import subprocess, tempfile, os, uuid, requests, json
+from datetime import datetime
 from utils.gpt_sidekick import format_findings_with_gpt_bulk, format_finding_with_gpt
 from utils.gpt_feedback_cache import get_gpt_feedback_cached
 
@@ -32,9 +33,13 @@ def _get_config_path(ext):
 
 def semgrep_scan_code_detail(code: str, ext: str) -> str:
     config_path = _get_config_path(ext)
-    print(f"룰 경로 : {config_path}")
-
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    
     filename = EXT_MAP.get(ext, f"main.{ext}")
+
+    print(f"룰 경로({current_time}) : {config_path}")
+
     with tempfile.TemporaryDirectory() as tempdir:
         src_path = os.path.join(tempdir, filename)
         with open(src_path, "w", encoding="utf-8") as f:
@@ -84,9 +89,11 @@ def semgrep_scan_code_detail_with_gpt(
     gpt_model: str = "gpt-3.5-turbo"
 ) -> dict:
     config_path = _get_config_path(ext)
-    print(f"룰 경로 : {config_path}")
-
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")    
     filename = EXT_MAP.get(ext, f"main.{ext}")
+
+    print(f"룰 경로({current_time}) : {config_path}")
 
     with tempfile.TemporaryDirectory() as tempdir:
         src_path = os.path.join(tempdir, filename)

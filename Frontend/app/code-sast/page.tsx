@@ -14,12 +14,14 @@ export default function SastOnlyPage() {
   const [currentProcessingIndex, setCurrentProcessingIndex] = useState<number | null>(null);
   const [useGptFeedback, setUseGptFeedback] = useState(false);
   const [gptModel, setGptModel] = useState("gpt-3.5-turbo");
+  const [totalElapsed, setTotalElapsed] = useState<number | null>(null);
 
   /** ----------- File Upload Handling ----------- **/
   const handleDrop = (droppedFiles: File[]) => {
     setFiles([...files, ...droppedFiles]);
     setCurrentFileIndex(0);
     setSastResults([]);
+    setTotalElapsed(null);
   };
 
   const handleRemoveFile = (index: number) => {
@@ -42,10 +44,15 @@ export default function SastOnlyPage() {
   const handleUpload = async () => {
     setLoading(true);
     setCurrentProcessingIndex(0);
+    setTotalElapsed(null);
+
+    const startTime = Date.now();
+
     const allResults: (any[] | string)[] = [];
 
     for (let i = 0; i < files.length; i++) {
       setCurrentProcessingIndex(i + 1);
+
       const formData = new FormData();
       formData.append("file", files[i]);
       formData.append("use_gpt_feedback", String(useGptFeedback));
@@ -62,6 +69,9 @@ export default function SastOnlyPage() {
         allResults.push(`[❌ 요청 실패]\n${err?.message || 'Unknown error'}`);
       }
     }
+
+    const endTime = Date.now();
+    setTotalElapsed((endTime - startTime) / 1000);
 
     setSastResults(allResults);
     setLoading(false);
@@ -88,15 +98,19 @@ export default function SastOnlyPage() {
     const target = document.getElementById("pdf-content");
     if (!target) return;
 
+    const toHide = target.querySelectorAll(".pdf-exclude");
+    toHide.forEach(el => el.classList.add("hidden"));
+
     const pdf = new jsPDF("p", "mm", "a4");
     const canvas = await html2canvas(target, { scale: 2 });
     const imgData = canvas.toDataURL("image/png");
-
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
     pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
     pdf.save(`${files[currentFileIndex]?.name || "sast_result"}.pdf`);
+
+    toHide.forEach(el => el.classList.remove("hidden"));
   };
 
   const handleCopyAll = () => {
@@ -208,6 +222,12 @@ export default function SastOnlyPage() {
       </div>
 
       <section id="pdf-content" className="mb-8">
+        {totalElapsed && (
+          <div className="my-4 p-4 rounded shadow bg-yellow-50 dark:bg-yellow-900 text-black dark:text-white pdf-exclude">
+            🚀 총 처리시간 (요청~응답): {totalElapsed.toFixed(2)}초
+          </div>
+        )}
+
         {typeof currentResult === 'string' && (
           <>
             <h2 className="text-xl font-semibold mb-2">❌ 분석 실패 / 오류 메시지</h2>
@@ -220,7 +240,7 @@ export default function SastOnlyPage() {
                     <span className="break-words">{line}</span>
                     <button
                       onClick={() => copyText(line)}
-                      className="text-xs bg-green-600 text-white px-2 py-1 rounded"
+                      className="text-xs bg-green-600 text-white px-2 py-1 rounded pdf-exclude"
                     >
                       📋
                     </button>
@@ -230,13 +250,13 @@ export default function SastOnlyPage() {
             <div className="flex gap-4 mt-2">
               <button
                 onClick={handleCopyAll}
-                className="bg-green-600 text-white px-4 py-2 rounded shadow"
+                className="bg-green-600 text-white px-4 py-2 rounded shadow pdf-exclude"
               >
                 📋 전체 복사
               </button>
               <button
                 onClick={handleDownloadAll}
-                className="bg-gray-700 text-white px-4 py-2 rounded shadow"
+                className="bg-gray-700 text-white px-4 py-2 rounded shadow pdf-exclude"
               >
                 ⬇️ 내용 저장
               </button>
@@ -264,14 +284,15 @@ export default function SastOnlyPage() {
                 className="bg-white dark:bg-gray-800 p-4 rounded shadow mb-4 whitespace-pre-wrap break-words"
               >
                 <h3 className="text-lg font-bold mb-2">
-                  📌 {langResult.language} (⏱️ {langResult.parse_time?.toFixed(3)}초)
+                  📌 {langResult.language}
+                  {langResult.parse_time && ` (⏱️ 서버 분석시간: ${langResult.parse_time.toFixed(3)}초)`}
                 </h3>
                 {langResult.results?.map((line: string, i: number) => (
                   <div key={i} className="flex justify-between items-center border-b py-3">
                     <span className="break-words">{line}</span>
                     <button
                       onClick={() => copyText(line)}
-                      className="text-xs bg-green-600 text-white px-2 py-1 rounded"
+                      className="text-xs bg-green-600 text-white px-2 py-1 rounded pdf-exclude"
                     >
                       📋
                     </button>
@@ -280,19 +301,19 @@ export default function SastOnlyPage() {
                 <div className="flex gap-2 mt-2">
                   <button
                     onClick={() => copyText(langResult.results.join('\n'))}
-                    className="bg-green-600 text-white px-3 py-1 rounded shadow text-sm"
+                    className="bg-green-600 text-white px-3 py-1 rounded shadow text-sm pdf-exclude"
                   >
                     📋 내용 복사
                   </button>
                   <button
                     onClick={() => saveText(langResult.results.join('\n'))}
-                    className="bg-gray-700 text-white px-3 py-1 rounded shadow text-sm"
+                    className="bg-gray-700 text-white px-3 py-1 rounded shadow text-sm pdf-exclude"
                   >
                     ⬇️ 내용 저장
                   </button>
                   <button
                     onClick={savePdf}
-                    className="bg-purple-700 text-white px-3 py-1 rounded shadow text-sm"
+                    className="bg-purple-700 text-white px-3 py-1 rounded shadow text-sm pdf-exclude"
                   >
                     ⬇️ PDF 저장
                   </button>
