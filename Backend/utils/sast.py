@@ -1,7 +1,9 @@
 import subprocess, tempfile, os, uuid, requests, json
-from .gpt_sidekick import format_findings_with_gpt_bulk, format_finding_with_gpt
+from utils.gpt_sidekick import format_findings_with_gpt_bulk, format_finding_with_gpt
+from utils.gpt_feedback_cache import get_gpt_feedback_cached
 
 SEM_GREP_RULES_PATH = "D:/003_Develop/05_Python/97.semgrep-rules/"  # 최상위 rules 폴더
+SEM_GREP_RULES_PATH_GPT_REPLACE = "D.003_Develop.05_Python.97.semgrep-rules."
 
 RULE_LANG_MAP = {
     "java": "java",
@@ -123,12 +125,14 @@ def semgrep_scan_code_detail_with_gpt(
 
             finding_summaries = []
             for r in results:
-                rule = r.get("check_id", "")
+                rule = r.get("check_id", "").replace(SEM_GREP_RULES_PATH_GPT_REPLACE, "")
                 path = r.get("path", "")
                 line = r.get("start", {}).get("line", "?")
                 message = r.get("extra", {}).get("message", "No message")
-                finding_summaries.append(f"[{rule}] {path}:{line} - {message}")
+                #finding_summaries.append(f"[{rule}] {path}:{line} - {message}")
+                finding_summaries.append(f"[{rule}] {message}")
                 #print(f"====5-{line}====")
+                #print(f"[{rule}] {message}")
 
             #print("====6====")
 
@@ -158,7 +162,10 @@ def semgrep_scan_code_detail_with_gpt(
                 #if use_gpt and idx < len(gpt_feedbacks):
                     #base_text += f"\n✍️ GPT 개선 제안:\n{gpt_feedbacks[idx]}"
                 if use_gpt:
-                    base_text += f"\n✍️ GPT 개선 제안:\n{format_finding_with_gpt(finding_summaries[idx], gpt_model)}"
+                    #base_text += f"\n✍️ GPT 개선 제안:\n{format_finding_with_gpt(finding_summaries[idx], gpt_model)}"
+                    feedback = get_gpt_feedback_cached(finding_summaries[idx],gpt_model,format_finding_with_gpt)
+                    base_text += f"\n✍️ GPT 개선 제안:\n{feedback}"
+                
                 #print(f"{base_text}")
 
                 formatted_results.append(base_text)

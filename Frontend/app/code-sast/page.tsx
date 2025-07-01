@@ -3,6 +3,8 @@
 import { useState } from "react";
 import axios from "axios";
 import Dropzone from "@/components/Dropzone";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function SastOnlyPage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -66,7 +68,7 @@ export default function SastOnlyPage() {
     setCurrentProcessingIndex(null);
   };
 
-  /** ----------- Copy / Save Helpers ----------- **/
+  /** ----------- Copy / Save / PDF Helpers ----------- **/
   const copyText = (text: string) => {
     navigator.clipboard.writeText(text);
     alert("📋 복사되었습니다.");
@@ -80,6 +82,21 @@ export default function SastOnlyPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const savePdf = async () => {
+    const target = document.getElementById("pdf-content");
+    if (!target) return;
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const canvas = await html2canvas(target, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`${files[currentFileIndex]?.name || "sast_result"}.pdf`);
   };
 
   const handleCopyAll = () => {
@@ -190,7 +207,7 @@ export default function SastOnlyPage() {
         )}
       </div>
 
-      <section className="mb-8">
+      <section id="pdf-content" className="mb-8">
         {typeof currentResult === 'string' && (
           <>
             <h2 className="text-xl font-semibold mb-2">❌ 분석 실패 / 오류 메시지</h2>
@@ -221,7 +238,13 @@ export default function SastOnlyPage() {
                 onClick={handleDownloadAll}
                 className="bg-gray-700 text-white px-4 py-2 rounded shadow"
               >
-                ⬇️ 전체 저장
+                ⬇️ 내용 저장
+              </button>
+              <button
+                onClick={savePdf}
+                className="bg-purple-700 text-white px-4 py-2 rounded shadow"
+              >
+                ⬇️ PDF 저장
               </button>
             </div>
           </>
@@ -230,13 +253,11 @@ export default function SastOnlyPage() {
         {Array.isArray(currentResult) && (
           <>
             <h2 className="text-xl font-semibold mb-2">🔍 정적분석 결과</h2>
-
             {currentResult.length === 0 && (
               <div className="bg-white dark:bg-gray-800 p-4 rounded shadow">
                 [✅ 분석결과 없음]
               </div>
             )}
-
             {currentResult.map((langResult: any, idx: number) => (
               <div
                 key={idx}
@@ -261,13 +282,19 @@ export default function SastOnlyPage() {
                     onClick={() => copyText(langResult.results.join('\n'))}
                     className="bg-green-600 text-white px-3 py-1 rounded shadow text-sm"
                   >
-                    📋 이 언어결과 복사
+                    📋 내용 복사
                   </button>
                   <button
                     onClick={() => saveText(langResult.results.join('\n'))}
                     className="bg-gray-700 text-white px-3 py-1 rounded shadow text-sm"
                   >
-                    ⬇️ 이 언어결과 저장
+                    ⬇️ 내용 저장
+                  </button>
+                  <button
+                    onClick={savePdf}
+                    className="bg-purple-700 text-white px-3 py-1 rounded shadow text-sm"
+                  >
+                    ⬇️ PDF 저장
                   </button>
                 </div>
               </div>
