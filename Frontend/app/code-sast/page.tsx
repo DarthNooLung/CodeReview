@@ -97,19 +97,57 @@ export default function SastOnlyPage() {
   const savePdf = async () => {
     const target = document.getElementById("pdf-content");
     if (!target) return;
-
+  
     const toHide = target.querySelectorAll(".pdf-exclude");
     toHide.forEach(el => el.classList.add("hidden"));
-
+  
     const pdf = new jsPDF("p", "mm", "a4");
-    const canvas = await html2canvas(target, { scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
+  
+    // ✅ scale 낮춰서 캡처 해상도 줄이기
+    const canvas = await html2canvas(target, { scale: 1.2 });
+  
+    const imgData = canvas.toDataURL("image/jpeg", 0.7); 
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  
+    // ✅ JPEG 포맷 + 퀄리티 조정
+    pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight, undefined, 'FAST');
+    //pdf.save(`${files[currentFileIndex]?.name || "sast_result"}.pdf`);
+    // 파일명 규칙: 정적분석_파일명.png
+    const baseFileName = files[currentFileIndex]?.name?.split(".")[0] || "결과";
+    const finalFileName = `정적분석_${baseFileName}.pdf`;
+    pdf.save(finalFileName)
+  
+    toHide.forEach(el => el.classList.remove("hidden"));
+  };
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`${files[currentFileIndex]?.name || "sast_result"}.pdf`);
-
+  const saveImage = async () => {
+    const target = document.getElementById("pdf-content");
+    if (!target) return;
+  
+    // PDF에서 하던 것과 똑같이 버튼 숨기기
+    const toHide = target.querySelectorAll(".pdf-exclude");
+    toHide.forEach(el => el.classList.add("hidden"));
+  
+    // 캡처
+    const canvas = await html2canvas(target, { scale: 1.3 });
+  
+    // 이미지 데이터
+    const imgData = canvas.toDataURL("image/png");
+  
+    // 다운로드 링크 생성
+    const link = document.createElement("a");
+    link.href = imgData;
+    //link.download = `${files[currentFileIndex]?.name || "sast_result"}.png`;
+    // 파일명 규칙: 정적분석_파일명.png
+    const baseFileName = files[currentFileIndex]?.name?.split(".")[0] || "결과";
+    const finalFileName = `정적분석_${baseFileName}.png`;
+    link.download = finalFileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  
+    // 버튼 복원
     toHide.forEach(el => el.classList.remove("hidden"));
   };
 
@@ -261,10 +299,10 @@ export default function SastOnlyPage() {
                 ⬇️ 내용 저장
               </button>
               <button
-                onClick={savePdf}
+                onClick={saveImage}
                 className="bg-purple-700 text-white px-4 py-2 rounded shadow"
               >
-                ⬇️ PDF 저장
+                ⬇️ 이미지 저장
               </button>
             </div>
           </>
@@ -285,7 +323,7 @@ export default function SastOnlyPage() {
               >
                 <h3 className="text-lg font-bold mb-2">
                   📌 {langResult.language}
-                  {langResult.parse_time && ` (⏱️ 서버 분석시간: ${langResult.parse_time.toFixed(3)}초)`}
+                  {langResult.parse_time && ` (⏱️ 정적 분석 시간: ${langResult.parse_time.toFixed(3)}초)`}
                 </h3>
                 {langResult.results?.map((line: string, i: number) => (
                   <div key={i} className="flex justify-between items-center border-b py-3">
@@ -312,10 +350,10 @@ export default function SastOnlyPage() {
                     ⬇️ 내용 저장
                   </button>
                   <button
-                    onClick={savePdf}
+                    onClick={saveImage}
                     className="bg-purple-700 text-white px-3 py-1 rounded shadow text-sm pdf-exclude"
                   >
-                    ⬇️ PDF 저장
+                    ⬇️ 이미지 저장
                   </button>
                 </div>
               </div>
