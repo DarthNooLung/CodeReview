@@ -124,31 +124,50 @@ export default function SastOnlyPage() {
   const saveImage = async () => {
     const target = document.getElementById("pdf-content");
     if (!target) return;
-  
+
     // PDF에서 하던 것과 똑같이 버튼 숨기기
     const toHide = target.querySelectorAll(".pdf-exclude");
     toHide.forEach(el => el.classList.add("hidden"));
-  
+
+    // ⭐️ 분석 대상 파일명 (업로드 원본 파일명 전체, 확장자 포함)
+    const analysisFileName = files[currentFileIndex]?.name || "분석파일";
+
+    // ⭐️ 파일명 라벨 DOM 생성
+    const baseFileName = files[currentFileIndex]?.name?.split(".")[0] || "결과";
+    const finalFileName = `정적분석_${baseFileName}.png`;
+
+    const header = document.createElement("div");
+    header.textContent = analysisFileName;
+    header.style.fontSize = "20px";
+    header.style.fontWeight = "bold";
+    header.style.marginBottom = "16px";
+    header.style.textAlign = "center";
+    header.style.backgroundColor = "#f5f5f5";
+    header.style.padding = "8px";
+    header.style.borderBottom = "2px solid #ccc";
+    header.classList.add("image-export-header");
+
+    target.prepend(header);
+
     // 캡처
     const canvas = await html2canvas(target, { scale: 1.3 });
-  
+
     // 이미지 데이터
     const imgData = canvas.toDataURL("image/png");
-  
+
     // 다운로드 링크 생성
     const link = document.createElement("a");
     link.href = imgData;
-    //link.download = `${files[currentFileIndex]?.name || "sast_result"}.png`;
-    // 파일명 규칙: 정적분석_파일명.png
-    const baseFileName = files[currentFileIndex]?.name?.split(".")[0] || "결과";
-    const finalFileName = `정적분석_${baseFileName}.png`;
     link.download = finalFileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  
+
     // 버튼 복원
     toHide.forEach(el => el.classList.remove("hidden"));
+
+    // ⭐️ 헤더 제거
+    header.remove();
   };
 
   const handleCopyAll = () => {
@@ -183,6 +202,13 @@ export default function SastOnlyPage() {
         .join("\n\n---\n\n");
     }
     saveText(text, `${files[currentFileIndex]?.name || "sast_result"}.sast.txt`);
+  };
+
+  const handleReset = () => {
+    setFiles([]);
+    setCurrentFileIndex(0);
+    setSastResults([]);
+    setTotalElapsed(null);
   };
 
   /** ----------- Rendering ----------- **/
@@ -231,7 +257,13 @@ export default function SastOnlyPage() {
         >
           정적분석 요청
         </button>
-
+        <button
+          onClick={handleReset}
+          className="bg-gray-500 text-white px-4 py-2 rounded shadow"
+          disabled={loading}
+        >
+          화면 초기화
+        </button>
         {files.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {files.map((file, idx) => (

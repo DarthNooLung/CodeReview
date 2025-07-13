@@ -130,6 +130,29 @@ def semgrep_scan_code_detail_with_gpt(
 
             #print("====5====")
 
+            # ⭐️ 무시할 메시지 정의
+            IGNORE_MESSAGES = [
+                "This page denies crawlers from indexing the page. Remove the robots 'meta' tag.",
+                "found alert() call; should this be in production code?"
+            ]
+
+            # ✅ 필터링 적용
+            filtered_results = []
+            for r in results:
+                message = r.get("extra", {}).get("message", "")
+                if any(ignored in message for ignored in IGNORE_MESSAGES):
+                    continue  # 제외
+                filtered_results.append(r)
+
+            # ✅ results 변수 교체
+            results = filtered_results
+
+            if not results:
+                return {
+                    "results": [f"[✅ 취약점 없음]\n모든 결과가 필터링되어 취약점이 남지 않았습니다."],
+                    "parse_time": parse_time
+                }
+
             finding_summaries = []
             for r in results:
                 rule = r.get("check_id", "").replace(SEM_GREP_RULES_PATH_GPT_REPLACE, "")

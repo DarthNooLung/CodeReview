@@ -37,9 +37,9 @@ async def analyze_code_with_sast_gpt(
             if js_part.strip():
                 r = semgrep_scan_code_detail_with_gpt(js_part, "js", use_gpt, gpt_model)
                 results.append({"language": "JS", **r})
-            if css_part.strip():
-                r = semgrep_scan_code_detail_with_gpt(css_part, "css", use_gpt, gpt_model)
-                results.append({"language": "CSS", **r})
+            #if css_part.strip():
+                #r = semgrep_scan_code_detail_with_gpt(css_part, "css", use_gpt, gpt_model)
+                #results.append({"language": "CSS", **r})
 
         elif ext == "aspx":
             html_part, cs_part, js_part, css_part = split_aspx(code)
@@ -53,9 +53,9 @@ async def analyze_code_with_sast_gpt(
             if js_part.strip():
                 r = semgrep_scan_code_detail_with_gpt(js_part, "js", use_gpt, gpt_model)
                 results.append({"language": "JS", **r})
-            if css_part.strip():
-                r = semgrep_scan_code_detail_with_gpt(css_part, "css", use_gpt, gpt_model)
-                results.append({"language": "CSS", **r})
+            #if css_part.strip():
+                #r = semgrep_scan_code_detail_with_gpt(css_part, "css", use_gpt, gpt_model)
+                #results.append({"language": "CSS", **r})
 
         elif ext in ["java", "js", "py", "cs", "css"]:
             r = semgrep_scan_code_detail_with_gpt(code, ext, use_gpt, gpt_model)
